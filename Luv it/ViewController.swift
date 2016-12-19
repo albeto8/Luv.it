@@ -7,19 +7,38 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
+    
+    let parameters: Parameters = ["page": 1]
+    var postArray = [Post]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        downloadFromApi{
+            for post in self.postArray {
+                print(post.id)
+            }
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func downloadFromApi(completed: @escaping DownloadComplete) {
+        Alamofire.request(BASE_URL, method: .post, parameters: parameters).responseJSON { (response) in
+            
+            if let dictionary = response.result.value as? Dictionary <String, Any>, let chunk = dictionary["chunk"] as? [Dictionary <String, Any>]{
+                
+                for item in chunk {
+                    
+                    if let post = Post(postDictionary: item) {
+                        self.postArray.append(post)
+                    }
+                }
+            }
+            completed()
+        }
     }
-
 
 }
 
