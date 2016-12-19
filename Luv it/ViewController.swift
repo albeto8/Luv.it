@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         
         downloadFromApi{
             for post in self.postArray {
-                print(post.id)
+                print("Post: productName: \(post.product.name) brandName: \(post.brand.name) \n")
             }
         }
     }

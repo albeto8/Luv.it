@@ -21,6 +21,7 @@ class Post {
     private var _luvsCount: Int!
     private var _repostFlag: Bool!
     private var _visibleFlag: Bool!
+    private var _user: User!
     
     var id: String {
         return _id
@@ -66,6 +67,10 @@ class Post {
         return _visibleFlag
     }
     
+    var user: User {
+        return _user
+    }
+    
     init?(postDictionary: Dictionary <String, Any>) {
         
         guard let id = postDictionary["post_id"] as? String,
@@ -78,12 +83,14 @@ class Post {
             let originalFlag = postDictionary["original_flag"] as? Bool,
             let luvsCount = postDictionary["luvs_count"] as? Int,
             let repostFlag = postDictionary["repost_flag"] as? Bool,
-            let visibleFlag = postDictionary["visible_flag"] as? Bool
+            let visibleFlag = postDictionary["visible_flag"] as? Bool,
+            let userDictionary = postDictionary["user"] as? Dictionary<String, Any>
             
-            else { print("Error parsing json"); return nil }
+            else { print("Error parsing post json"); return nil }
         
         let brand = Brand(brandDictionary: brandDictionary)
         let product = Product(productDictionary: productDictionary)
+        let user = User(userDictionary: userDictionary)
         
         self._id = id
         self._activeFlag = activeFlag
@@ -96,6 +103,7 @@ class Post {
         self._luvsCount = luvsCount
         self._repostFlag = repostFlag
         self._visibleFlag = visibleFlag
+        self._user = user
     }
     
 }
