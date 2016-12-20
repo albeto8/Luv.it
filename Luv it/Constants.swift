@@ -13,6 +13,13 @@ let RED_COLOR = hexStringToUIColor(hex: "#D0011B")
 let DARK_GRAY_COLOR = hexStringToUIColor(hex: "#4A4A4A")
 let LIGHT_GRAY_COLOR = hexStringToUIColor(hex: "#9B9B9B")
 
+func STRIKE_ATTRIBUTE(text: String) -> NSAttributedString{
+    
+    return NSAttributedString(string: text, attributes: [NSStrikethroughStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])
+}
+
+
+
 typealias DownloadComplete = () -> ()
 
 

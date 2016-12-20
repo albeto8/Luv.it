@@ -71,6 +71,7 @@ class CustomCell: UITableViewCell {
         productNameLabel.text = "Ipad Pro 128 Gb - Space Gray"
         
         priceLabel.text = "$1000"
+        
         salePriceLabel.text = "$500"
         
         numberLikesButton.setImage(UIImage(named: "heart"), for: .normal)
@@ -95,6 +96,8 @@ class CustomCell: UITableViewCell {
         
         priceLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
         priceLabel.textColor = LIGHT_GRAY_COLOR
+        priceLabel.attributedText = STRIKE_ATTRIBUTE(text: priceLabel.text!)
+
         
         salePriceLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
         salePriceLabel.textColor = LIGHT_GRAY_COLOR
