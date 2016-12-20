@@ -9,19 +9,47 @@
 import UIKit
 import Alamofire
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let parameters: Parameters = ["page": 1]
     var postArray = [Post]()
+    
+    var contentView: MainView {
+        return view as! MainView
+    }
+    
+    override func loadView() {
+        view = MainView()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        contentView.tableView.delegate = self
+        contentView.tableView.dataSource = self
+        /*
         downloadFromApi{
             for post in self.postArray {
                 print("Post: productName: \(post.product.name) brandName: \(post.brand.name) \n")
             }
         }
+        */
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 384
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CustomCell {
+            return cell
+        }
+        //cell?.textLabel?.text = "Hola mundo"
+        return UITableViewCell()
     }
     
     func downloadFromApi(completed: @escaping DownloadComplete) {

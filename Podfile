@@ -7,6 +7,7 @@ target 'Luv it' do
 
   # Pods for Luv it
   pod 'Alamofire', '~> 4.0'
+  pod 'SnapKit', '~> 3.0.2'
 
   target 'Luv itTests' do
     inherit! :search_paths
