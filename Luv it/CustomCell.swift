@@ -39,11 +39,15 @@ class CustomCell: UITableViewCell {
     }
     
     private func initializeUI() {
-        configureCell()
-        styleCell()
+        
+        heartButton.addTarget(self, action: #selector(self.luvTapped), for: .touchUpInside)
+        repostButton.addTarget(self, action: #selector(self.repostTapped), for: .touchUpInside)
+        
         contentView.addSubview(view)
+        
         view.addSubview(heartButton)
         view.addSubview(repostButton)
+        
         view.addSubview(productImageView)
         view.addSubview(stockLabel)
         view.addSubview(lineView)
@@ -57,28 +61,39 @@ class CustomCell: UITableViewCell {
         
     }
     
-    private func configureCell() {
+    func configureCell(post: Post) {
         
-        heartButton.setBackgroundImage(UIImage(named: "heartitemenabled"), for: .normal)
+        if post.luvFlag {
+            heartButton.setBackgroundImage(UIImage(named: "heartitemenabled"), for: .normal)
+        } else {
+            heartButton.setBackgroundImage(UIImage(named: "heartitem"), for: .normal)
+        }
         
-        repostButton.setBackgroundImage(UIImage(named: "favoriteditemenabled"), for: .normal)
+        if post.repostFlag {
+            repostButton.setBackgroundImage(UIImage(named: "favoriteditemenabled"), for: .normal)
+        } else {
+            repostButton.setBackgroundImage(UIImage(named: "favoriteditem"), for: .normal)
+        }
+        
         
         productImageView.image = UIImage(named: "jacket")
         productImageView.contentMode = .scaleAspectFit
         
-        stockLabel.text = "Low Stock"
+        stockLabel.text = post.product.stockStatus
         
-        productNameLabel.text = "Ipad Pro 128 Gb - Space Gray"
+        productNameLabel.text = post.product.name
         
-        priceLabel.text = "$1000"
+        priceLabel.text = post.product.price
         
-        salePriceLabel.text = "$500"
+        salePriceLabel.text = post.product.salePrice
         
         numberLikesButton.setImage(UIImage(named: "heart"), for: .normal)
-        numberLikesButton.setTitle(" 1234 luvs", for: .normal)
+        numberLikesButton.setTitle(" \(post.luvsCount) luvs", for: .normal)
         
         numberRepostsButton.setImage(UIImage(named: "commenticon"), for: .normal)
-        numberRepostsButton.setTitle(" 1234 Reposts", for: .normal)
+        numberRepostsButton.setTitle(" \(post.repostCount) reposts", for: .normal)
+        
+        styleCell()
     }
     
     private func styleCell() {
@@ -109,6 +124,24 @@ class CustomCell: UITableViewCell {
         
         numberRepostsButton.setTitleColor(DARK_GRAY_COLOR, for: .normal)
         numberRepostsButton.titleLabel?.font = UIFont (name: "AvenirNext-Medium", size: 10)
+    }
+    
+    
+     func luvTapped() {
+        
+        if  heartButton.currentBackgroundImage == UIImage(named: "heartitemenabled") {
+            heartButton.setBackgroundImage(UIImage(named: "heartitem"), for: .normal)
+        } else {
+            heartButton.setBackgroundImage(UIImage(named: "heartitemenabled"), for: .normal)
+        }
+    }
+    
+    func repostTapped() {
+        if  repostButton.currentBackgroundImage == UIImage(named: "favoriteditemenabled") {
+            repostButton.setBackgroundImage(UIImage(named: "favoriteditem"), for: .normal)
+        } else {
+            repostButton.setBackgroundImage(UIImage(named: "favoriteditemenabled"), for: .normal)
+        }
     }
     
     private func createConstraints() {

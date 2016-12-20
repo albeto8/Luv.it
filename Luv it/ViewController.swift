@@ -29,17 +29,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         contentView.tableView.dataSource = self
         
         self.navigationItem.title = "Luv it"
-        /*
+        
         downloadFromApi{
             for post in self.postArray {
                 print("Post: productName: \(post.product.name) brandName: \(post.brand.name) \n")
+                self.contentView.tableView.reloadData()
             }
         }
-        */
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return postArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -49,9 +50,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CustomCell {
+            
+            cell.configureCell(post: postArray[indexPath.row])
+            
             return cell
         }
-        //cell?.textLabel?.text = "Hola mundo"
         return UITableViewCell()
     }
     
