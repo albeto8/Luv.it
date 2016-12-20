@@ -39,7 +39,7 @@ class CustomCell: UITableViewCell {
     }
     
     private func initializeUI() {
-        configureImages()
+        configureCell()
         view.backgroundColor = UIColor.red
         lineView.backgroundColor = UIColor.blue
         contentView.addSubview(view)
@@ -58,8 +58,9 @@ class CustomCell: UITableViewCell {
         
     }
     
-    private func configureImages() {
+    private func configureCell() {
         
+        view.materialDesign = true
         heartButton.setImage(UIImage(named: "heartitemenabled"), for: .normal)
         repostButton.setImage(UIImage(named: "favoriteditemenabled"), for: .normal)
         productImageView.image = UIImage(named: "jacket")
