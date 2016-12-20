@@ -40,8 +40,7 @@ class CustomCell: UITableViewCell {
     
     private func initializeUI() {
         configureCell()
-        view.backgroundColor = UIColor.red
-        lineView.backgroundColor = UIColor.blue
+        styleCell()
         contentView.addSubview(view)
         view.addSubview(heartButton)
         view.addSubview(repostButton)
@@ -63,9 +62,14 @@ class CustomCell: UITableViewCell {
         view.materialDesign = true
         heartButton.setImage(UIImage(named: "heartitemenabled"), for: .normal)
         repostButton.setImage(UIImage(named: "favoriteditemenabled"), for: .normal)
+        
         productImageView.image = UIImage(named: "jacket")
+        productImageView.contentMode = .scaleAspectFit
+        
         stockLabel.text = "Low Stock"
+        
         productNameLabel.text = "Ipad Pro 128 Gb - Space Gray"
+        
         priceLabel.text = "$1000"
         salePriceLabel.text = "$500"
         
@@ -73,7 +77,33 @@ class CustomCell: UITableViewCell {
         numberLikesButton.setTitle(" 1234 likes", for: .normal)
         
         numberRepostsButton.setImage(UIImage(named: "commenticon"), for: .normal)
-        numberRepostsButton.setTitle("1234 Reposts", for: .normal)
+        numberRepostsButton.setTitle(" 1234 Reposts", for: .normal)
+    }
+    
+    private func styleCell() {
+        
+        view.backgroundColor = UIColor.white
+        
+        stockLabel.font = UIFont (name: "AvenirNext-Medium", size: 10)
+        stockLabel.textColor = RED_COLOR
+        
+        lineView.backgroundColor = LIGHT_GRAY_COLOR
+        
+        productNameLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        productNameLabel.textColor = DARK_GRAY_COLOR
+        productNameLabel.textAlignment = .center
+        
+        priceLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        priceLabel.textColor = LIGHT_GRAY_COLOR
+        
+        salePriceLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        salePriceLabel.textColor = LIGHT_GRAY_COLOR
+        
+        numberLikesButton.setTitleColor(DARK_GRAY_COLOR, for: .normal)
+        numberLikesButton.titleLabel?.font = UIFont (name: "AvenirNext-Medium", size: 10)
+        
+        numberRepostsButton.setTitleColor(DARK_GRAY_COLOR, for: .normal)
+        numberRepostsButton.titleLabel?.font = UIFont (name: "AvenirNext-Medium", size: 10)
     }
     
     private func createConstraints() {
