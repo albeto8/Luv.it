@@ -59,7 +59,6 @@ class CustomCell: UITableViewCell {
     
     private func configureCell() {
         
-        view.materialDesign = true
         heartButton.setImage(UIImage(named: "heartitemenabled"), for: .normal)
         repostButton.setImage(UIImage(named: "favoriteditemenabled"), for: .normal)
         
@@ -82,6 +81,8 @@ class CustomCell: UITableViewCell {
     }
     
     private func styleCell() {
+        
+        view.materialDesign = true
         
         view.backgroundColor = UIColor.white
         

@@ -24,8 +24,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
+        
+        self.navigationItem.title = "Luv it"
         /*
         downloadFromApi{
             for post in self.postArray {
