@@ -59,8 +59,9 @@ class CustomCell: UITableViewCell {
     
     private func configureCell() {
         
-        heartButton.setImage(UIImage(named: "heartitemenabled"), for: .normal)
-        repostButton.setImage(UIImage(named: "favoriteditemenabled"), for: .normal)
+        heartButton.setBackgroundImage(UIImage(named: "heartitemenabled"), for: .normal)
+        
+        repostButton.setBackgroundImage(UIImage(named: "favoriteditemenabled"), for: .normal)
         
         productImageView.image = UIImage(named: "jacket")
         productImageView.contentMode = .scaleAspectFit
@@ -74,7 +75,7 @@ class CustomCell: UITableViewCell {
         salePriceLabel.text = "$500"
         
         numberLikesButton.setImage(UIImage(named: "heart"), for: .normal)
-        numberLikesButton.setTitle(" 1234 likes", for: .normal)
+        numberLikesButton.setTitle(" 1234 luvs", for: .normal)
         
         numberRepostsButton.setImage(UIImage(named: "commenticon"), for: .normal)
         numberRepostsButton.setTitle(" 1234 Reposts", for: .normal)
@@ -123,17 +124,22 @@ class CustomCell: UITableViewCell {
             
             make.top.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(7)
+            make.height.equalTo(45)
+            make.width.equalTo(45)
         }
         
         repostButton.snp.makeConstraints { make in
             
             make.top.equalToSuperview().inset(8)
             make.trailing.equalToSuperview().inset(8)
+            make.height.equalTo(45)
+            make.width.equalTo(45)
         }
         
         productImageView.snp.makeConstraints { make in
             
             make.top.equalTo(repostButton.snp.bottom).offset(8)
+            make.top.equalTo(heartButton.snp.bottom).offset(8)
             make.trailing.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(8)
             make.height.equalTo(174)
