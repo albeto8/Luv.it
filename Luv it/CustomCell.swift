@@ -31,7 +31,7 @@ class CustomCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        productImageView.image = UIImage(named: "placeholder")
+        productImageView.image = nil
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,7 +67,15 @@ class CustomCell: UITableViewCell {
         
     }
     
-    func configureCell(post: Post) {
+    func configureCell(post: Post, image: UIImage? = nil) {
+        
+        if image == nil {
+            productImageView.downloadedFrom(link: post.product.imageGalleryUrls[0])
+            print("Downloaded image")
+        } else {
+            print("Cached image")
+            productImageView.image = image
+        }
         
         if post.luvFlag {
             heartButton.setBackgroundImage(UIImage(named: "heartitemenabled"), for: .normal)
@@ -81,8 +89,6 @@ class CustomCell: UITableViewCell {
             repostButton.setBackgroundImage(UIImage(named: "favoriteditem"), for: .normal)
         }
         
-        
-        productImageView.downloadedFrom(link: post.product.imageGalleryUrls[0])
         productImageView.contentMode = .scaleAspectFit
         
         stockLabel.text = post.product.stockStatus
@@ -243,6 +249,7 @@ extension UIImageView {
                     print("Error downloading image")
                     return }
             DispatchQueue.main.async() { () -> Void in
+                ViewController.imageCache.setObject(image, forKey: url.absoluteString as NSString)
                 self.image = image
             }
             }.resume()

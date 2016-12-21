@@ -13,6 +13,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let parameters: Parameters = ["page": 1]
     var postArray = [Post]()
+    static var imageCache: NSCache<NSString, UIImage> = NSCache()
     
     var contentView: MainView {
         return view as! MainView
@@ -49,9 +50,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let post = postArray[indexPath.row]
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CustomCell {
             
-            cell.configureCell(post: postArray[indexPath.row])
+            if let image = ViewController.imageCache.object(forKey: post.product.imageGalleryUrls[0] as NSString) {
+                cell.configureCell(post: post, image: image)
+            } else {
+                cell.configureCell(post: post)
+            }
             
             return cell
         }
