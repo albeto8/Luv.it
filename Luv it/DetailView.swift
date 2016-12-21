@@ -21,6 +21,7 @@ class DetailView: UIView {
     var salePriceLabel = UILabel()
     var numberLikesButton = UIButton()
     var numberRepostsButton = UIButton()
+    var buyButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame : frame)
@@ -53,6 +54,8 @@ class DetailView: UIView {
         addSubview(numberLikesButton)
         addSubview(numberRepostsButton)
         
+        addSubview(buyButton)
+        
     }
     
     func configureUI(post: Post, image: UIImage? = nil) {
@@ -81,15 +84,17 @@ class DetailView: UIView {
         
         productNameLabel.text = post.product.name
         
-        priceLabel.text = post.product.price
+        priceLabel.text = "$\(post.product.price)"
         
-        salePriceLabel.text = post.product.salePrice
+        salePriceLabel.text = "$\(post.product.salePrice)"
         
         numberLikesButton.setImage(UIImage(named: "heart"), for: .normal)
         numberLikesButton.setTitle(" \(post.luvsCount) luvs", for: .normal)
         
         numberRepostsButton.setImage(UIImage(named: "commenticon"), for: .normal)
         numberRepostsButton.setTitle(" \(post.repostCount) reposts", for: .normal)
+        
+        buyButton.setTitle("Buy", for: .normal)
         
         styleCell()
     }
@@ -101,7 +106,7 @@ class DetailView: UIView {
         
         lineView.backgroundColor = LIGHT_GRAY_COLOR
         
-        productNameLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        productNameLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 18)
         productNameLabel.textColor = DARK_GRAY_COLOR
         productNameLabel.textAlignment = .center
         
@@ -117,6 +122,11 @@ class DetailView: UIView {
         
         numberRepostsButton.setTitleColor(DARK_GRAY_COLOR, for: .normal)
         numberRepostsButton.titleLabel?.font = UIFont (name: "AvenirNext-Medium", size: 10)
+        
+        buyButton.setTitleColor(UIColor.white, for: .normal)
+        buyButton.titleLabel?.font = UIFont (name: "AvenirNext-Medium", size: 20)
+        buyButton.backgroundColor = RED_COLOR
+        buyButton.layer.cornerRadius = 5
     }
     
     
@@ -205,6 +215,14 @@ class DetailView: UIView {
             
             make.top.equalTo(salePriceLabel.snp.bottom).offset(13.5)
             make.leading.equalTo(numberLikesButton.snp.trailing).offset(8)
+        }
+        
+        buyButton.snp.makeConstraints { make in
+            
+            make.top.equalTo(numberLikesButton.snp.bottom).offset(35)
+            make.top.equalTo(numberRepostsButton.snp.bottom).offset(35)
+            make.leading.equalToSuperview().inset(7)
+            make.trailing.equalToSuperview().inset(8)
         }
     }
 }
