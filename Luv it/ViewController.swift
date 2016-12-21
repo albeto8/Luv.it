@@ -11,7 +11,9 @@ import Alamofire
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let parameters: Parameters = ["page": 1]
+    var page = 1
+    var isNewDataLoading = false
+    
     var postArray = [Post]()
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     
@@ -31,10 +33,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.navigationItem.title = "Luv it"
         
-        downloadFromApi{
+        downloadFromApi(page: self.page) {
+            self.contentView.tableView.reloadData()
             for post in self.postArray {
                 print("Post: productName: \(post.product.name) brandName: \(post.brand.name) \n")
-                self.contentView.tableView.reloadData()
             }
         }
         
@@ -65,10 +67,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return UITableViewCell()
     }
     
-    func downloadFromApi(completed: @escaping DownloadComplete) {
+    func downloadFromApi(page: Int, completed: @escaping DownloadComplete) {
+        
+        let parameters: Parameters = ["page": page]
+        
         Alamofire.request(BASE_URL, method: .post, parameters: parameters).responseJSON { (response) in
             
-            if let dictionary = response.result.value as? Dictionary <String, Any>, let chunk = dictionary["chunk"] as? [Dictionary <String, Any>]{
+            if let dictionary = response.result.value as? Dictionary <String, Any>, dictionary["status"] as? String == "OK", let chunk = dictionary["chunk"] as? [Dictionary <String, Any>] {
                 
                 for item in chunk {
                     
@@ -76,8 +81,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.postArray.append(post)
                     }
                 }
+                self.page = self.page + 1
             }
             completed()
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        //Bottom Refresh
+        if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
+            if !isNewDataLoading {
+                isNewDataLoading = true
+                print("BOTOMM \(page)")
+                self.downloadFromApi(page: self.page) {
+                    self.contentView.tableView.reloadData()
+                    self.isNewDataLoading = false
+                }
+            }
         }
     }
 
