@@ -26,6 +26,7 @@ class MainView: UIView {
     private func initializeUI() {
         
         tableView.register(CustomCell.self, forCellReuseIdentifier: "cell")
+        tableView.separatorStyle = .none
         addSubview(tableView)
     }
     

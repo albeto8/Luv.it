@@ -24,8 +24,14 @@ class CustomCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         initializeUI()
         createConstraints()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        productImageView.image = UIImage(named: "placeholder")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,7 +82,7 @@ class CustomCell: UITableViewCell {
         }
         
         
-        productImageView.image = UIImage(named: "jacket")
+        productImageView.downloadedFrom(link: post.product.imageGalleryUrls[0])
         productImageView.contentMode = .scaleAspectFit
         
         stockLabel.text = post.product.stockStatus
@@ -115,7 +121,6 @@ class CustomCell: UITableViewCell {
         priceLabel.textColor = LIGHT_GRAY_COLOR
         priceLabel.attributedText = STRIKE_ATTRIBUTE(text: priceLabel.text!)
 
-        
         salePriceLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
         salePriceLabel.textColor = LIGHT_GRAY_COLOR
         
@@ -224,6 +229,29 @@ class CustomCell: UITableViewCell {
             make.leading.equalTo(numberLikesButton.snp.trailing).offset(8)
             make.bottom.equalToSuperview().inset(21.5)
         }
+    }
+}
+
+extension UIImageView {
+    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else {
+                    print("Error downloading image")
+                    return }
+            DispatchQueue.main.async() { () -> Void in
+                self.image = image
+            }
+            }.resume()
+    }
+    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloadedFrom(url: url, contentMode: mode)
     }
 }
 
