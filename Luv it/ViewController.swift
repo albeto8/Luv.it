@@ -87,6 +87,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let post = postArray[indexPath.row]
+        
+        let detailVC = DetailVC()
+        
+        detailVC.post = post
+        
+        if let image = ViewController.imageCache.object(forKey: post.product.imageGalleryUrls[0] as NSString) {
+            
+            detailVC.postImage = image
+        }
+
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         //Bottom Refresh
         if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
