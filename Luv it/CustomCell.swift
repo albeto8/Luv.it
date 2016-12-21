@@ -176,11 +176,9 @@ class CustomCell: UITableViewCell {
         
         productImageView.snp.makeConstraints { make in
             
-            make.top.equalTo(repostButton.snp.bottom).offset(8)
-            make.top.equalTo(heartButton.snp.bottom).offset(8)
-            make.trailing.equalToSuperview().inset(8)
-            make.leading.equalToSuperview().inset(8)
-            make.height.equalTo(174)
+            make.top.equalToSuperview().inset(25)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(190)
         }
         
         stockLabel.snp.makeConstraints { make in
