@@ -54,11 +54,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let post = postArray[indexPath.row]
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CustomCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CustomCell {
             
             if let image = ViewController.imageCache.object(forKey: post.product.imageGalleryUrls[0] as NSString) {
                 cell.configureCell(post: post, image: image)
             } else {
+                
                 cell.configureCell(post: post)
             }
             
@@ -116,6 +117,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-
+ 
 }
 

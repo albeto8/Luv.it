@@ -13,7 +13,7 @@ class CustomCell: UITableViewCell {
     var view = UIView()
     var heartButton = UIButton()
     var repostButton = UIButton()
-    var productImageView = UIImageView()
+    var productImageView = CustomImageView()
     var stockLabel = UILabel()
     var lineView = UIView()
     var productNameLabel = UILabel()
@@ -235,29 +235,3 @@ class CustomCell: UITableViewCell {
         }
     }
 }
-
-extension UIImageView {
-    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else {
-                    print("Error downloading image")
-                    return }
-            DispatchQueue.main.async() { () -> Void in
-                ViewController.imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                self.image = image
-            }
-            }.resume()
-    }
-    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloadedFrom(url: url, contentMode: mode)
-    }
-}
-
-
