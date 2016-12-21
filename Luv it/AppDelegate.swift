@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = UINavigationController(rootViewController: ViewController())
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         UINavigationBar.appearance().barTintColor = UIColor.black
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSFontAttributeName: UIFont(name: "AvenirNext-Bold", size: 20)!
+        ]
         return true
     }
 
