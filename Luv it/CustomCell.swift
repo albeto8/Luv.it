@@ -70,7 +70,7 @@ class CustomCell: UITableViewCell {
     func configureCell(post: Post, image: UIImage? = nil) {
         
         if image == nil {
-            productImageView.downloadedFrom(link: post.product.imageGalleryUrls[0])
+            productImageView.downloadedFrom(link: (post.product?.imageGalleryUrls[0])!)
             print("Downloaded image")
         } else {
             print("Cached image")
@@ -91,13 +91,13 @@ class CustomCell: UITableViewCell {
         
         productImageView.contentMode = .scaleAspectFit
         
-        stockLabel.text = post.product.stockStatus
+        stockLabel.text = post.product?.stockStatus
         
-        productNameLabel.text = post.product.name
+        productNameLabel.text = post.product?.name
         
-        priceLabel.text = "$\(post.product.price)"
+        priceLabel.text = "$\(post.product!.price)"
         
-        salePriceLabel.text = "$\(post.product.salePrice)"
+        salePriceLabel.text = "$\(post.product!.salePrice)"
         
         numberLikesButton.setImage(UIImage(named: "heart"), for: .normal)
         numberLikesButton.setTitle(" \(post.luvsCount) luvs", for: .normal)

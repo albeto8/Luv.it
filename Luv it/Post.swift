@@ -35,7 +35,7 @@ class Post {
         return _repostCount
     }
     
-    var product: Product {
+    var product: Product? {
         return _product
     }
     

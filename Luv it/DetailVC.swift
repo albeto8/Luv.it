@@ -31,5 +31,4 @@ class DetailVC: UIViewController {
             detailView.configureUI(post: currentPost, image: postImage)
         }
     }
-
 }

@@ -31,13 +31,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
         
-        self.navigationItem.title = "Luv it"
+        self.navigationItem.title = "Luv.it"
         
         downloadFromApi(page: self.page) {
             self.contentView.tableView.reloadData()
-            for post in self.postArray {
-                print("Post: productName: \(post.product.name) brandName: \(post.brand.name) \n")
-            }
         }
         
     }
@@ -56,14 +53,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CustomCell {
             
-            if let image = ViewController.imageCache.object(forKey: post.product.imageGalleryUrls[0] as NSString) {
-                cell.configureCell(post: post, image: image)
-            } else {
+            if let _ = post.product {
                 
-                cell.configureCell(post: post)
+                if let image = ViewController.imageCache.object(forKey: post.product!.imageGalleryUrls[0] as NSString) {
+                    cell.configureCell(post: post, image: image)
+                } else {
+                    
+                    cell.configureCell(post: post)
+                }
+                
+                return cell
             }
-            
-            return cell
         }
         return UITableViewCell()
     }
@@ -96,7 +96,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         detailVC.post = post
         
-        if let image = ViewController.imageCache.object(forKey: post.product.imageGalleryUrls[0] as NSString) {
+        if let image = ViewController.imageCache.object(forKey: post.product!.imageGalleryUrls[0] as NSString) {
             
             detailVC.postImage = image
         }
@@ -117,6 +117,5 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
- 
 }
 
